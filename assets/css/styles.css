@@ -38,6 +38,164 @@ body {
 * YOUR CODE HERE
 */
 
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  animation-name: fadeIn;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.3s;
+}
+
 .logo {
   width: 50px;
+}
+
+.styled-form-container {
+  padding: 15px 15px 30px;
+  background-color: #e2e2e2;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin-top: 20px;
+  box-shadow: 0 0 8px #00000029;
+  overflow: hidden;
+}
+
+.input-main {
+  height: 35px;
+  background-color: #d8d8d8;
+  border: none;
+  padding-left: 10px;
+  margin-bottom: 8px;
+  transition: 0.2s;
+}
+
+.input-main,
+.button-main {
+  animation-name: fadeInRight;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.3s;
+  animation-fill-mode: backwards;
+}
+.input-main:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.input-main:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.button-main {
+  height: 35px;
+  background-color: green;
+  border: none;
+  color: white;
+  animation-delay: 0.4s;
+}
+
+.button-main:disabled {
+  background-color: #d8d8d8;
+  cursor: not-allowed;
+}
+
+.button-main:hover {
+  background-color: #00a332;
+}
+
+.button-main:active {
+  background-color: #038326;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  justify-items: right;
+  width: 700px;
+  flex-basis: unset;
+  margin-top: 20px;
+}
+
+.user-card {
+  background-color: #fff;
+  padding: 10px;
+  margin: 5px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  box-shadow: 0 0 6px #00000066;
+}
+
+.user-card img {
+  width: 30px;
+  border-radius: 50%;
+  transition: 0.3s;
+  filter: grayscale(1);
+}
+
+.user-card div {
+  display: flex;
+  align-items: center;
+}
+
+.user-card div span {
+  transition: 0.3s;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.user-card:hover {
+  cursor: pointer;
+}
+
+.user-card:hover img {
+  transform: scale(2);
+  filter: grayscale(0);
+  box-shadow: 0 0 5px gray;
+}
+
+.user-card:hover span {
+  margin-left: 20px;
+  margin-right: 0px;
+}
+
+.logout-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #64c5e4;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  box-shadow: 3px 3px 3px lightgrey;
+  transition: 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
