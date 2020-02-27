@@ -1,93 +1,123 @@
-(() => {
-    const selector = selector => /* trecho omitido */
-    const create = element => /* trecho omitido */
+// (() => {
+const selector = selector => document.querySelector(selector);
+const create = element => document.createElement(element);
 
-    const app = selector('#app');
+const app = selector("#app");
 
-    const Login = create('div');
-    Login.classList.add('login');
+const Login = create("div");
+Login.classList.add("login");
 
-    const Logo = create('img');
-    Logo.src = './assets/images/logo.svg';
-    Logo.classList.add('logo');
+const Logo = create("img");
+Logo.src = "./assets/images/logo.svg";
+Logo.classList.add("logo");
 
-    const Form = create('form');
+const Form = create("form");
 
-    Form.onsubmit = async e => {
-        e.preventDefault();
-        const [email, password] = /* trecho omitido */
+const getFormData = () => {
+  return [...Form.elements]
+    .filter(element => element.tagName === "INPUT")
+    .map(input => input.value);
+};
 
-        const {url} = await fakeAuthenticate(email.value, password.value);
+Form.onsubmit = async e => {
+  e.preventDefault();
+  const [email, password] = getFormData();
 
-        location.href='#users';
-        
-        const users = await getDevelopersList(url);
-        renderPageUsers(users);
-    };
+  const { url } = await fakeAuthenticate(email.value, password.value);
 
-    Form.oninput = e => {
-        const [email, password, button] = e.target.parentElement.children;
-        (!email.validity.valid || !email.value || password.value.length <= 5) 
-            ? button.setAttribute('disabled','disabled')
-            : button.removeAttribute('disabled');
-    };
+  location.href = "#users";
 
-    Form.innerHTML = /**
-    * bloco de código omitido
-    * monte o seu formulário
-    */
+  const users = await getDevelopersList(url);
+  renderPageUsers(users);
+};
 
-    app.appendChild(Logo);
-    Login.appendChild(Form);
+Form.oninput = e => {
+  const [email, password, button] = e.target.parentElement.children;
+  !email.validity.valid || !email.value || password.value.length <= 5
+    ? button.setAttribute("disabled", "disabled")
+    : button.removeAttribute("disabled");
+};
 
-    async function fakeAuthenticate(email, password) {
+Form.innerHTML = `
+    <div class="styled-form-container">
+        <input
+            type="email"
+            name="email"
+            class="input-main"
+            placeholder="Entre com seu e-mail"
+            required
+        />
+        <input
+            type="password"
+            name="password"
+            class="input-main"
+            placeholder="Digite sua senha supersecreta"
+            required
+        />
+        <button type="submit" class="button-main" disabled>Entrar</button>
+    </div>
+`;
 
-        /**
-         * bloco de código omitido
-         * aqui esperamos que você faça a requisição ao URL informado
-         */
+app.appendChild(Logo);
+Login.appendChild(Form);
 
-        const fakeJwtToken = `${btoa(email+password)}.${btoa(data.url)}.${(new Date()).getTime()+300000}`;
-        /* trecho omitido */
+async function fakeAuthenticate(email, password) {
+  const response = fetch("http://www.mocky.io/v2/5dba690e3000008c00028eb6");
+  //   const data = await response.then(res => res.json());
 
-        return data;
-    }
+  console.log(response);
 
-    async function getDevelopersList(url) {
-        /**
-         * bloco de código omitido
-         * aqui esperamos que você faça a segunda requisição 
-         * para carregar a lista de desenvolvedores
-         */
-    }
+  return;
 
-    function renderPageUsers(users) {
-        app.classList.add('logged');
-        Login.style.display = /* trecho omitido */
+  const fakeJwtToken = `${btoa(email + password)}.${btoa(
+    data.url
+  )}.${new Date().getTime() + 300000}`;
 
-        const Ul = create('ul');
-        Ul.classList.add('container')
+  localStorage.setItem("token", fakeJwtToken);
+  setTimeout(() => {
+    localStorage.removeItem("token");
+  }, 1000 * 60 * 5);
 
-        /**
-         * bloco de código omitido
-         * exiba a lista de desenvolvedores
-         */
+  console.log(fakeJwtToken);
 
-        app.appendChild(Ul)
-    }
+  return data;
+}
 
-    // init
-    (async function(){
-        const rawToken = /* trecho omitido */
-        const token = rawToken ? rawToken.split('.') : null
-        if (!token || token[2] < (new Date()).getTime()) {
-            localStorage.removeItem('token');
-            location.href='#login';
-            app.appendChild(Login);
-        } else {
-            location.href='#users';
-            const users = await getDevelopersList(atob(token[1]));
-            renderPageUsers(users);
-        }
-    })()
-})()
+// async function getDevelopersList(url) {
+//     /**
+//      * bloco de código omitido
+//      * aqui esperamos que você faça a segunda requisição
+//      * para carregar a lista de desenvolvedores
+//      */
+// }
+
+// function renderPageUsers(users) {
+//     app.classList.add('logged');
+//     Login.style.display = /* trecho omitido */
+
+//     const Ul = create('ul');
+//     Ul.classList.add('container')
+
+//     /**
+//      * bloco de código omitido
+//      * exiba a lista de desenvolvedores
+//      */
+
+//     app.appendChild(Ul)
+// }
+
+// // init
+// (async function(){
+//     const rawToken = /* trecho omitido */
+//     const token = rawToken ? rawToken.split('.') : null
+//     if (!token || token[2] < (new Date()).getTime()) {
+//         localStorage.removeItem('token');
+//         location.href='#login';
+app.appendChild(Login);
+//     } else {
+//         location.href='#users';
+//         const users = await getDevelopersList(atob(token[1]));
+//         renderPageUsers(users);
+//     }
+// })()
+// })();
